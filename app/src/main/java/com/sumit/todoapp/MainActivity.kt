@@ -4,12 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.sumit.todoapp.api.model.response.ToDoResponse
+import com.sumit.todoapp.ui.components.card.ToDoCard
 import com.sumit.todoapp.ui.theme.ToDoAppTheme
 import com.sumit.todoapp.viewmodel.ToDoListViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -24,8 +28,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val sharedDeviceViewModel: ToDoListViewModel = koinViewModel<ToDoListViewModel>()
-                    Greeting("Android")
+                    val toDoListViewModel: ToDoListViewModel = koinViewModel<ToDoListViewModel>()
+                    val todo = toDoListViewModel.toDo.collectAsState().value
+                    // Getting the state from the view model and setting to UI.
+                    ToDoList(todo)
                 }
             }
         }
@@ -33,17 +39,20 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun ToDoList(todo: ToDoResponse) {
+    LazyColumn{
+        items(todo.toList()){ todoResponseItem ->
+            ToDoCard(todoResponseItem)
+        }
+    }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ToDoAppTheme {
-        Greeting("Android")
+        ToDoList(todo = ToDoResponse())
     }
 }
