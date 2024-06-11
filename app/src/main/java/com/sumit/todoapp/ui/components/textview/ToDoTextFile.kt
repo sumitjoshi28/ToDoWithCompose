@@ -52,3 +52,23 @@ fun DescriptionText(
         modifier = modifier,
         style = style)
 }
+
+@Composable
+fun ButtonText(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: TextStyle = LocalTextStyle.current.
+    copy(
+        color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+        fontFamily = FontFamily(
+            Font(R.font.robotobold)
+        ),
+        fontSize = 16.sp,
+        textAlign = TextAlign.Start
+    )
+){
+    Text(
+        text = text,
+        modifier = modifier,
+        style = style)
+}

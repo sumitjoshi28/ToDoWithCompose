@@ -1,8 +1,10 @@
 package com.sumit.todoapp.ui.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,8 +22,10 @@ import com.sumit.todoapp.ui.components.textview.HeaderText
 import com.sumit.todoapp.util.Helper
 
 @Composable
-fun ToDoHomeScreen(){
-    Column(modifier = Modifier.padding(16.dp)) {
+fun ToDoHomeScreen(padding: PaddingValues){
+    Column(modifier = Modifier
+        .padding(16.dp)
+        .fillMaxSize()) {
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
